@@ -42,7 +42,7 @@ namespace Array.Application
         public int[] SubArrayWithSum0(int[] arr, int N){
 
             // loop thru array if there is any element = 0, that is sum 0 subarray
-            // else create prefix sum array and loop thru it, if any sum is 0 (meaning startpoint 0 and endpoint i) or 
+            // else create prefix sum array and loop thru it, if any sum is 0 (meaning startpoint 0 and endpoint i) or
             // if any 2 sums are same (meaning startpoint is firstIndex +1 and endpoint is i)
 
             int flag = 0;
@@ -151,16 +151,16 @@ namespace Array.Application
         //     int noOfSubarrays = (N * N + N) / 2;
 
         //     int[,] subArraySums = new int[noOfSubarrays,1];
-            
+
         //     int pointer = 0;
         //     int currentsum = arr[0];
-        //     subArraySums[0,0] = 
+        //     subArraySums[0,0] =
         //     for (int i = 1; i < N; i++)
         //     {
         //         currentsum += arr[i];
         //         if(currentsum <= givenSum)
         //     }
-        // } 
+        // }
 
         public int GetSumOfAllSubArrays(int[] arr, int N)
         {
@@ -193,7 +193,7 @@ namespace Array.Application
 
             // calculate sum of subarrays of length B
             int s0 = 0, si = 0;
-            
+
             for (int i = 0; i < B; i++)
             {
                 s0 += A[i];
@@ -218,7 +218,7 @@ namespace Array.Application
 
             return new int[2] { startIndex, endIndex};
         }
-    
+
         // Largest Positive Subarray
         public List<int> LargestPositiveSubarray(List<int> A) {
             int N = A.Count;
@@ -252,13 +252,79 @@ namespace Array.Application
                     startPoint = newStartPoint;
                 }
             }
-            
+
             List<int> longestSubArray = new List<int>();
             for(int i = startPoint; i <= endPoint; i++){
                 longestSubArray.Add(A[i]);
             }
 
             return longestSubArray;
+        }
+
+        //Alternating sub array
+        public List<int> IndexesForAlternstingSubArray(List<int> A, int B){
+            List<int> ans = new List<int>();
+            for(int i = B; i <= A.Count-1-B; i++){
+                bool flag = true;
+                for(int j = i-1, k = i+1; j >= i-B && k <= i+B; j--, k++){
+                    if(A[j] != A[k] || A[j] == A[j+1] || A[k] == A[k-1]){
+                        flag = false;
+                        break;
+                    }
+                }
+                if(flag){
+                    ans.Add(i);
+                }
+            }
+            return ans;
+        }
+
+        // Longest consecutive 1s with 1 swap
+        public int LongestConsecutive1sWith1swap(string A){
+            int counter = 0;
+            int ones = 0;
+            Dictionary<int, int> dic= new Dictionary<int, int>();
+            for (int i = 0; i < A.Length; i++)
+            {
+                int a = Int32.Parse(A[i].ToString());
+                if(a == 1){
+                    ones++;
+                }
+            }
+            if(ones == A.Count()){
+                return ones;
+            }
+
+            bool swapAvailable = true;
+            int separator = -1;
+            int ans = int.MinValue;
+            for(int i = 0; i < A.Count() && ones > 0; i++){
+                int a = Int32.Parse(A[i].ToString());
+                if(a == 1){
+                    separator = 0;
+                    ones--;
+                    if(ones >= 0){
+                        counter++;
+                    }
+                }
+                else{
+                    separator++;
+                    if(!swapAvailable && separator > 1){
+                        swapAvailable = true;
+                    }
+                    if(ones > 0 && swapAvailable){
+                        swapAvailable = false;
+                        counter++;
+                        ones--;
+                    }
+                    if(separator > 1){
+                        counter = 0;
+                    }
+                }
+
+                ans = Math.Max(ans, counter);
+            }
+            return ans;
         }
     }
 }

@@ -47,6 +47,8 @@ namespace Array.Application.Contract
         int SecondMax(int[] arr, int N);
         void solve();
         int[] SubArrayWithSum0(int[] arr, int N);
+        List<int> IndexesForAlternstingSubArray(List<int> A, int B);
+        int LongestConsecutive1sWith1swap(string A);
     }
 }
 

@@ -321,4 +321,18 @@ public class ArrayController : ControllerBase
 	{
 		return new JsonResult(_app.SubArrayWithSum0(arr, arr.Length));
 	}
+
+	[HttpPost]
+	[Route("IndexesForAlternstingSubArray")]
+	public IActionResult IndexesForAlternstingSubArray(List<int> arr, int sizeOfAlternatingSubArray)	
+	{
+		return new JsonResult(_app.IndexesForAlternstingSubArray(arr, sizeOfAlternatingSubArray));
+	}
+
+	[HttpPost]
+	[Route("LongestConsecutive1sWith1swap")]
+	public IActionResult LongestConsecutive1sWith1swap(string A)	
+	{
+		return new JsonResult(_app.LongestConsecutive1sWith1swap(A));
+	}
 }
